@@ -1,0 +1,6 @@
+framework module Pods_TopPic {
+  umbrella header "Pods-TopPic-umbrella.h"
+
+  export *
+  module * { export * }
+}
