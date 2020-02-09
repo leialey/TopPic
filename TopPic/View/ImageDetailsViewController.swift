@@ -8,18 +8,13 @@
 
 import UIKit
 import Bond
-import AlamofireImage
 
 class ImageDetailsViewController: UIViewController, ImageDetailsViewModelBindable, StatusBindable {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageTitle: UILabel!
     @IBOutlet weak var imageComments: UITextView!
-    
     var viewModel: ImageDetailsViewModelProtocol?
-    private let imagePlaceholder = UIImage(named: "picture")
-    let filter = AspectScaledToFitSizeFilter(size: CGSize(width: UIScreen.main.bounds.size.width,
-                                                          height: UIScreen.main.bounds.size.height * 0.3))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +23,7 @@ class ImageDetailsViewController: UIViewController, ImageDetailsViewModelBindabl
     
     func bindViewModel() {
         viewModel?.image.bind(to: self) { me, image in
-            if let imageURL = image.imageURL {
-                me.imageView.af_setImage(withURL: imageURL, placeholderImage: me.imagePlaceholder,
-                                         filter: me.filter, imageTransition: .crossDissolve(0.2))
-            } else {
-                me.imageView.image = me.imagePlaceholder
-            }
+            me.imageView.loadFromURLWithPlaceholder(url: image.imageURL)
             me.imageTitle.text = image.title
             // 1. Comment1
             // 2. Comment2

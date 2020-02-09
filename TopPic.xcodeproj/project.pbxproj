@@ -37,6 +37,7 @@
 		15BC425123EE8F5100214B08 /* VIewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC425023EE8F5100214B08 /* VIewProtocols.swift */; };
 		15BC425323EE930500214B08 /* ViewModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC425223EE930500214B08 /* ViewModelProtocols.swift */; };
 		15BC425823EF0D3800214B08 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC425723EF0D3800214B08 /* JSONParser.swift */; };
+		15BC425A23EFA71800214B08 /* UIImageView-loadFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC425923EFA71800214B08 /* UIImageView-loadFromURL.swift */; };
 		7E9225583C7C08C662327DA0 /* Pods_TopPic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3B90F0E6D4E7269D64BD4B3 /* Pods_TopPic.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		15BC425023EE8F5100214B08 /* VIewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VIewProtocols.swift; sourceTree = "<group>"; };
 		15BC425223EE930500214B08 /* ViewModelProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocols.swift; sourceTree = "<group>"; };
 		15BC425723EF0D3800214B08 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
+		15BC425923EFA71800214B08 /* UIImageView-loadFromURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView-loadFromURL.swift"; sourceTree = "<group>"; };
 		46D2679EF38D512900F3BD54 /* Pods-TopPic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopPic.debug.xcconfig"; path = "Target Support Files/Pods-TopPic/Pods-TopPic.debug.xcconfig"; sourceTree = "<group>"; };
 		64BD49049AF1DE057B9C1B4F /* Pods-TopPic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopPic.release.xcconfig"; path = "Target Support Files/Pods-TopPic/Pods-TopPic.release.xcconfig"; sourceTree = "<group>"; };
 		F3B90F0E6D4E7269D64BD4B3 /* Pods_TopPic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TopPic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				1596EC6923ED007000FCD781 /* Collection-safe.swift */,
+				15BC425923EFA71800214B08 /* UIImageView-loadFromURL.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				1596EC5B23ECF77500FCD781 /* Image.swift in Sources */,
 				1596EC6A23ED007000FCD781 /* Collection-safe.swift in Sources */,
 				1596EC4C23ECF4A500FCD781 /* NetworkManager.swift in Sources */,
+				15BC425A23EFA71800214B08 /* UIImageView-loadFromURL.swift in Sources */,
 				1596EC5323ECF50000FCD781 /* FetchStatus.swift in Sources */,
 				15BC425123EE8F5100214B08 /* VIewProtocols.swift in Sources */,
 				1596EC3723ECF3FD00FCD781 /* ImageListCollectionViewController.swift in Sources */,
