@@ -7,57 +7,56 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Bond
 
 class ImageListViewModel: ImageListViewModelProtocol {
     
-    
     var images = Observable<[Image]>([]) // list of images
     private var apiManager: ApiManagement
     var status = Observable<TaskStatus>(.notRunning)
-    var itemsToDisplay: Int = 1 //ImageListCollectionViewController's collectionView will display total images + 1 if not all items are fetched from the API yet
+    var itemsToDisplay: Int = 1 //ImageListCollectionViewController's collectionView will display total images + 1
+    //if not all items are fetched from the API yet
     
     // MARK: - Public
     required init() {
         apiManager = ApiManager()
-        NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged), name: .connected, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged),
+                                               name: .connected, object: nil)
         NetworkManager.shared.startMonitoring()
     }
 
-    func requestImageDetails(_ row: Int) -> ImageDetailsViewModelProtocol? {
-        guard let image = images.value[safe: row] else { return nil } //user can select empty cell
+    func requestImageDetails(_ item: Int) -> ImageDetailsViewModelProtocol? {
+        guard let image = images.value[safe: item] else { return nil } //user can select empty cell
         let viewModel: ImageDetailsViewModelProtocol  = ImageDetailsViewModel(image)
-        viewModel.requestDetails(row)
+        viewModel.requestDetails(item)
         return viewModel
     }
     
-    func configureCell(_ row: Int) -> ImageCellViewModelProtocol {
-        let imageCellVM: ImageCellViewModelProtocol = ImageCellViewModel(images.value[safe: row])
+    func cellViewModel(_ item: Int) -> ImageCellViewModelProtocol {
+        let imageCellVM: ImageCellViewModelProtocol = ImageCellViewModel(images.value[safe: item])
         return imageCellVM
     }
     
-    func loadDataIfNeeded(_ row: Int) {
-        fetchImages(row)
+    func loadDataIfNeeded(_ item: Int) {
+        fetchImages(item)
     }
     
     // MARK: - Private
     
-    private func fetchImages(_ row: Int) {
+    private func fetchImages(_ item: Int) {
         //No parallel fetching or fetching same images
         
-        if images.value[safe: row] != nil || apiManager.getStatus() == .inProgress {
+        if images.value[safe: item] != nil || apiManager.getStatus() == .inProgress {
             return
         }
         self.status.value = .isRefreshing
-        apiManager.startFetching(row)
+        apiManager.startFetching(item)
         
         //Start fetching
-        apiManager.sendRequest(apiName: .popular, parameters: nil) { (result) in
+        apiManager.sendRequest(apiEndpoint: .popular, parameters: [:]) { (result) in
             switch result {
             case .success(let jsonString):
-                let json = JSON(jsonString)
-                self.parseJSONImages(json)
+                self.parseJSON(jsonString)
             case .failure(let error):
                 self.endRefresh(error)
             }
@@ -68,10 +67,12 @@ class ImageListViewModel: ImageListViewModelProtocol {
         self.status.value = status
     }
     
-    //We can also create a separate JSONParser service
-    private func parseJSONImages(_ json: JSON) {
+    private func parseJSON(_ jsonString: Any) {
         //there are groups of images (albums) and single images - they have different structure
-        let newImages = json["data"].arrayValue.map{Image(id: $0["id"].stringValue, title: $0["title"].stringValue, isAlbum: $0["is_album"].boolValue, imageURL: APIImage(stringURL: ($0["is_album"].boolValue == true) ? $0["images"].arrayValue[safe: 0]?["link"].stringValue : $0["link"].stringValue).secureURL)}
+        guard let newImages = JSONParser.parse(apiEndpoint: .popular, jsonString: jsonString) as? [Image] else {
+            self.endRefresh(TaskStatus.errorParsing)
+            return
+        }
 
         //Check if all images fetched
         endRefresh(.finished)

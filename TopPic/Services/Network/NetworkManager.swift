@@ -9,7 +9,8 @@
 import Foundation
 import Network
 
-//There should be only a single instance of NetworkManager - therefore using a singleton. We can also use Alamofire's network manager
+//There should be only a single instance of NetworkManager - therefore using a singleton.
+//We can also use Alamofire's network manager
 
 public final class NetworkManager {
     
@@ -19,8 +20,7 @@ public final class NetworkManager {
     
     private init() {
     }
-    
-    
+
     func startMonitoring() {
         concurrentQueue.async(flags: .barrier) {
             guard self.monitor == nil else { return }

@@ -15,33 +15,36 @@ struct ApiRequest: ApiRequestConstructor {
     private var params: Parameters?
     private var headers: HTTPHeaders?
     typealias T = DataRequest
-    
-    //MARK: - Public methods
-    init (_ apiName: ApiName, _ parameters: Any?) {
-        switch apiName {
+
+    // MARK: - Public methods
+    init (_ apiEndpoint: ApiEndpoint, _ parameters: ApiRequestParameters) {
+        switch apiEndpoint {
         case .popular:
-            
-            guard let page = parameters as? Int else { fatalError("Page wrong format") }
-            baseURL = "https://api.imgur.com/3/gallery/search/top/all/\(page)"
+            baseURL = "https://api.imgur.com/3/gallery/search/top/all/<page>"
             params = [
-                "q": "ext: png OR jpg", //just to make it simple, however there are other possible formats e.g. gif or mp4
+                "q": "ext: png OR jpg"
+                //just to make it simple, however there are other possible formats e.g. gif or mp4
             ]
-            
             headers = [
                 "Authorization": "Client-ID \(clientID)"
             ]
-            
         case .details:
-            guard let (imageID, isAlbum) = parameters as? (String, Bool) else { fatalError("Image parameters in wrong format") }
-            let imageParent = isAlbum ? "album" : "image"
-            baseURL = "https://api.imgur.com/3/gallery/\(imageParent)/\(imageID)/comments/top"
+            baseURL = "https://api.imgur.com/3/gallery/<albumImage>/<imageID>/comments/top"
             headers = [
                 "Authorization": "Client-ID \(clientID)"
             ]
         }
+        baseURL = constructBaseURL(&baseURL, parameters)
     }
     
     func getDataRequest() -> T {
         return Alamofire.request(self.baseURL, method: .get, parameters: self.params, headers: self.headers)
+    }
+    // MARK: - Private methods
+    private func constructBaseURL(_ baseURL: inout String, _ parameters: ApiRequestParameters) -> String {
+        parameters.forEach { (key, value) in
+            baseURL = baseURL.replacingOccurrences(of: "<\(key)>", with: value)
+        }
+        return baseURL
     }
 }

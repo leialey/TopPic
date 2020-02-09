@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Bond
 
 class ImageDetailsViewModel: ImageDetailsViewModelProtocol {
@@ -21,13 +20,17 @@ class ImageDetailsViewModel: ImageDetailsViewModelProtocol {
         apiManager = ApiManager()
     }
     
-    func requestDetails(_ row: Int) {
+    func requestDetails(_ item: Int) {
         status.value = .isRefreshing
-        apiManager.sendRequest(apiName: .details, parameters: (self.image.value.id, self.image.value.isAlbum)) { (result) in
+        let parameters: ApiRequestParameters = [
+            "albumImage": self.image.value.isAlbum ? "album" : "image",
+            "imageID": self.image.value.id
+        ]
+        apiManager.sendRequest(apiEndpoint: .details,
+                               parameters: parameters) { (result) in
             switch result {
             case .success(let jsonString):
-                let json = JSON(jsonString)
-                if let comments = self.parseJSONVideo(json) {
+                if let comments = self.parseJSON(jsonString) {
                     self.image.value.comments = comments
                 }
                 self.endRefreshing(.finished)
@@ -38,8 +41,12 @@ class ImageDetailsViewModel: ImageDetailsViewModelProtocol {
     }
     
     // MARK: - Private
-    private func parseJSONVideo(_ json: JSON) -> [String]? {
-        return json["data"].arrayValue.map({$0["comment"].stringValue})
+    private func parseJSON(_ jsonString: Any) -> [String]? {
+        guard let comments = JSONParser.parse(apiEndpoint: .details, jsonString: jsonString) as? [String] else {
+            self.endRefreshing(TaskStatus.errorParsing)
+            return nil
+        }
+        return comments
     }
     
     private func endRefreshing(_ status: TaskStatus) {

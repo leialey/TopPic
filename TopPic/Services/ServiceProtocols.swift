@@ -8,9 +8,11 @@
 
 import Foundation
 
+typealias ApiRequestParameters = [String: String]
+
 protocol ApiRequestConstructor {
     associatedtype T
-    init(_ apiName: ApiName, _ parameters: Any?)
+    init(_ apiEndpoint: ApiEndpoint, _ parameters: ApiRequestParameters)
     func getDataRequest() -> T
 }
 
@@ -23,9 +25,10 @@ protocol ApiManagement {
     var currentPage: ApiPage { get set }
     func getStatus() -> FetchStatus
     func startFetching(_ index: Int)
-    func sendRequest(apiName: ApiName, parameters: Any?, completionHandler: @escaping (Swift.Result<Any, TaskStatus>) -> Void)
+    func sendRequest(apiEndpoint: ApiEndpoint, parameters: ApiRequestParameters,
+                     completionHandler: @escaping (Swift.Result<Any, TaskStatus>) -> Void)
 }
 
-protocol NetworkManagerDelegate {
-    func onConnected()
+protocol JSONParsing {
+    static func parse(apiEndpoint: ApiEndpoint, jsonString: Any) -> Any?
 }

@@ -15,12 +15,16 @@ public final class AppSettings {
     
     private init() {
         guard let path = Bundle.main.path(forResource: "apiAuth", ofType: "plist"),
-            let settings = NSDictionary(contentsOfFile: path) as? [String : Any] else { fatalError("plist in wrong format") }
+            let settings = NSDictionary(contentsOfFile: path) as? [String: Any] else {
+                fatalError("plist in wrong format")
+        }
         self.settings = settings
     }
     
     public func string(key: String) -> String {
-        guard let setting = settings[key] as? String, setting != "" else { fatalError("Value not found or in a wrong format") }
+        guard let setting = settings[key] as? String, setting != "" else {
+            fatalError("Value not found or in a wrong format")
+        }
         return setting
     }
 }

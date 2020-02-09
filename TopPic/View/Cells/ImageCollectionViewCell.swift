@@ -11,22 +11,17 @@ import UIKit
 class ImageCollectionViewCell: UICollectionViewCell, ImageCellViewBindable {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageTitle: UILabel!
+    static private let imagePlaceholder = UIImage(named: "picture")
     
-    var viewModel: ImageCellViewModelProtocol? {
-        didSet {
-           bindViewModel()
-        }
-    }
-    let imagePlaceholder = UIImage(named: "picture")
-    
-    func bindViewModel() {
+    func bindViewModel(_ viewModel: ImageCellViewModelProtocol) {
         let cellElements = [imageView, imageTitle]
-        if let image = viewModel?.image {
+        if let image = viewModel.image {
                 cellElements.forEach({$0?.isHidden = false})
                 if let imageURL = image.imageURL {
-                    imageView.af_setImage(withURL: imageURL, placeholderImage: self.imagePlaceholder, imageTransition: .crossDissolve(0.2))
+                    imageView.af_setImage(withURL: imageURL, placeholderImage: ImageCollectionViewCell.imagePlaceholder,
+                                          imageTransition: .crossDissolve(0.2))
                 } else {
-                    self.imageView.image = self.imagePlaceholder
+                    self.imageView.image = ImageCollectionViewCell.imagePlaceholder
                 }
                 imageTitle.text = image.title
             } else {

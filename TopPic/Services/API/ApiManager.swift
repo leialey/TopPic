@@ -12,7 +12,7 @@ class ApiManager: ApiManagement {
     var currentPage = ApiPage() // current requested page from API
     private var fetchStatus: FetchStatus = .initial
     
-    //MARK: - Public methods
+    // MARK: - Public methods
     func getStatus() -> FetchStatus {
         return fetchStatus
     }
@@ -25,8 +25,9 @@ class ApiManager: ApiManagement {
         fetchStatus = .inProgress
     }
     
-    func sendRequest(apiName: ApiName, parameters: Any?, completionHandler: @escaping (Swift.Result<Any, TaskStatus>) -> Void) {
-        let apiRequest = constructRequest(apiName, parameters)
+    func sendRequest(apiEndpoint: ApiEndpoint, parameters: ApiRequestParameters,
+                     completionHandler: @escaping (Swift.Result<Any, TaskStatus>) -> Void) {
+        let apiRequest = constructRequest(apiEndpoint, parameters)
         //Start fetching
         //Validate - response code 200..<300
         apiRequest.getDataRequest().validate().responseJSON { response in
@@ -43,13 +44,13 @@ class ApiManager: ApiManagement {
             self.fetchStatus = .initial
         }
     }
-    //MARK: - Private methods
-    private func constructRequest(_ apiName: ApiName, _ parameter: Any?) -> ApiRequest {
-        switch apiName {
+    // MARK: - Private methods
+    private func constructRequest(_ apiEndpoint: ApiEndpoint, _ parameter: ApiRequestParameters) -> ApiRequest {
+        switch apiEndpoint {
         case .popular:
-            return ApiRequest(apiName, currentPage.pageIndex)
+            return ApiRequest(apiEndpoint, ["page": "\(currentPage.pageIndex)"])
         case .details:
-            return ApiRequest(apiName, parameter)
+            return ApiRequest(apiEndpoint, parameter)
         }
     }
 }

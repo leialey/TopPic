@@ -23,7 +23,7 @@
 		1596EC5923ECF74500FCD781 /* ImageDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EC5823ECF74500FCD781 /* ImageDetailsViewModel.swift */; };
 		1596EC5B23ECF77500FCD781 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EC5A23ECF77500FCD781 /* Image.swift */; };
 		1596EC5D23ECF7B400FCD781 /* ServiceProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EC5C23ECF7B400FCD781 /* ServiceProtocols.swift */; };
-		1596EC5F23ECFC3D00FCD781 /* ApiName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EC5E23ECFC3D00FCD781 /* ApiName.swift */; };
+		1596EC5F23ECFC3D00FCD781 /* ApiEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EC5E23ECFC3D00FCD781 /* ApiEndpoint.swift */; };
 		1596EC6123ECFC8700FCD781 /* ApiPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EC6023ECFC8700FCD781 /* ApiPage.swift */; };
 		1596EC6623ECFEDC00FCD781 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596EC6423ECFEDC00FCD781 /* ImageCollectionViewCell.swift */; };
 		1596EC6723ECFEDC00FCD781 /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1596EC6523ECFEDC00FCD781 /* ImageCollectionViewCell.xib */; };
@@ -36,6 +36,7 @@
 		15BC424F23EE45E100214B08 /* ImageListCollectionViewController-UICollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC424E23EE45E100214B08 /* ImageListCollectionViewController-UICollectionViewDelegateFlowLayout.swift */; };
 		15BC425123EE8F5100214B08 /* VIewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC425023EE8F5100214B08 /* VIewProtocols.swift */; };
 		15BC425323EE930500214B08 /* ViewModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC425223EE930500214B08 /* ViewModelProtocols.swift */; };
+		15BC425823EF0D3800214B08 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BC425723EF0D3800214B08 /* JSONParser.swift */; };
 		7E9225583C7C08C662327DA0 /* Pods_TopPic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3B90F0E6D4E7269D64BD4B3 /* Pods_TopPic.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +59,7 @@
 		1596EC5823ECF74500FCD781 /* ImageDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailsViewModel.swift; sourceTree = "<group>"; };
 		1596EC5A23ECF77500FCD781 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		1596EC5C23ECF7B400FCD781 /* ServiceProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProtocols.swift; sourceTree = "<group>"; };
-		1596EC5E23ECFC3D00FCD781 /* ApiName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiName.swift; sourceTree = "<group>"; };
+		1596EC5E23ECFC3D00FCD781 /* ApiEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiEndpoint.swift; sourceTree = "<group>"; };
 		1596EC6023ECFC8700FCD781 /* ApiPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiPage.swift; sourceTree = "<group>"; };
 		1596EC6423ECFEDC00FCD781 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		1596EC6523ECFEDC00FCD781 /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -71,6 +72,7 @@
 		15BC424E23EE45E100214B08 /* ImageListCollectionViewController-UICollectionViewDelegateFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageListCollectionViewController-UICollectionViewDelegateFlowLayout.swift"; sourceTree = "<group>"; };
 		15BC425023EE8F5100214B08 /* VIewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VIewProtocols.swift; sourceTree = "<group>"; };
 		15BC425223EE930500214B08 /* ViewModelProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocols.swift; sourceTree = "<group>"; };
+		15BC425723EF0D3800214B08 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		46D2679EF38D512900F3BD54 /* Pods-TopPic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopPic.debug.xcconfig"; path = "Target Support Files/Pods-TopPic/Pods-TopPic.debug.xcconfig"; sourceTree = "<group>"; };
 		64BD49049AF1DE057B9C1B4F /* Pods-TopPic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TopPic.release.xcconfig"; path = "Target Support Files/Pods-TopPic/Pods-TopPic.release.xcconfig"; sourceTree = "<group>"; };
 		F3B90F0E6D4E7269D64BD4B3 /* Pods_TopPic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TopPic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +140,7 @@
 				1596EC4E23ECF4D500FCD781 /* TaskStatus.swift */,
 				1596EC4D23ECF4B900FCD781 /* Network */,
 				15BC425423EEC37800214B08 /* API */,
+				15BC425623EF0CB400214B08 /* Parser */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -216,12 +219,20 @@
 			children = (
 				1596EC5223ECF50000FCD781 /* FetchStatus.swift */,
 				1596EC4723ECF45500FCD781 /* ApiRequest.swift */,
-				1596EC5E23ECFC3D00FCD781 /* ApiName.swift */,
+				1596EC5E23ECFC3D00FCD781 /* ApiEndpoint.swift */,
 				1596EC6023ECFC8700FCD781 /* ApiPage.swift */,
 				15BC424A23ED76A800214B08 /* ApiImage.swift */,
 				1596EC4923ECF48500FCD781 /* ApiManager.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		15BC425623EF0CB400214B08 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				15BC425723EF0D3800214B08 /* JSONParser.swift */,
+			);
+			path = Parser;
 			sourceTree = "<group>";
 		};
 		807A4EEE1B7DDA48AF712BF6 /* Frameworks */ = {
@@ -350,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15BC424923ED675B00214B08 /* ImageDetailsViewController.swift in Sources */,
+				15BC425823EF0D3800214B08 /* JSONParser.swift in Sources */,
 				1596EC5123ECF4ED00FCD781 /* Notifications.swift in Sources */,
 				1596EC6123ECFC8700FCD781 /* ApiPage.swift in Sources */,
 				1596EC6623ECFEDC00FCD781 /* ImageCollectionViewCell.swift in Sources */,
@@ -359,7 +371,7 @@
 				1596EC5323ECF50000FCD781 /* FetchStatus.swift in Sources */,
 				15BC425123EE8F5100214B08 /* VIewProtocols.swift in Sources */,
 				1596EC3723ECF3FD00FCD781 /* ImageListCollectionViewController.swift in Sources */,
-				1596EC5F23ECFC3D00FCD781 /* ApiName.swift in Sources */,
+				1596EC5F23ECFC3D00FCD781 /* ApiEndpoint.swift in Sources */,
 				1596EC3323ECF3FD00FCD781 /* AppDelegate.swift in Sources */,
 				15BC425323EE930500214B08 /* ViewModelProtocols.swift in Sources */,
 				1596EC4F23ECF4D500FCD781 /* TaskStatus.swift in Sources */,

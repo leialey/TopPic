@@ -1,5 +1,5 @@
 //
-//  ApiName.swift
+//  ApiEndpoint.swift
 //  TopPic
 //
 //  Created by Leialey on 07.02.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ApiName {
+enum ApiEndpoint {
     case popular
     case details
 }

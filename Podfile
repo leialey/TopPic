@@ -11,5 +11,4 @@ pod 'Alamofire'
 pod 'SwiftyJSON'
 pod 'AlamofireImage'
 pod 'SVProgressHUD'
-
 end
