@@ -18,6 +18,8 @@ class ImageDetailsViewController: UIViewController, ImageDetailsViewModelBindabl
     
     var viewModel: ImageDetailsViewModelProtocol?
     private let imagePlaceholder = UIImage(named: "picture")
+    let filter = AspectScaledToFitSizeFilter(size: CGSize(width: UIScreen.main.bounds.size.width,
+                                                          height: UIScreen.main.bounds.size.height * 0.3))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +30,7 @@ class ImageDetailsViewController: UIViewController, ImageDetailsViewModelBindabl
         viewModel?.image.bind(to: self) { me, image in
             if let imageURL = image.imageURL {
                 me.imageView.af_setImage(withURL: imageURL, placeholderImage: me.imagePlaceholder,
-                                         imageTransition: .crossDissolve(0.2))
+                                         filter: me.filter, imageTransition: .crossDissolve(0.2))
             } else {
                 me.imageView.image = me.imagePlaceholder
             }
