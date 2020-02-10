@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct APIImage {
-    var secureURL: URL?
+struct APIImage: ApiImageConstructor {
+    private(set) var secureURL: URL?
     
-    init(stringURL: String?) {
-        if let stringURL = stringURL {
+    init(fileName: String?) {
+        if let stringURL = fileName {
             let path = securePath(path: stringURL)
             self.secureURL = URL(string: path)
         }

@@ -11,20 +11,20 @@ import Bond
 
 class ImageListViewModel: ImageListViewModelProtocol {
     
-    var images = Observable<[Image]>([]) // list of images
+    private(set) var images = Observable<[Image]>([]) // list of images
     private var apiManager: ApiManagement
-    var status = Observable<TaskStatus>(.notRunning)
-    var itemsToDisplay: Int = 1 //ImageListCollectionViewController's collectionView will display total images + 1
+    private(set) var status = Observable<TaskStatus>(.notRunning)
+    private(set) var itemsToDisplay: Int = 1 //ImageListCollectionViewController's collectionView will display total images + 1
     //if not all items are fetched from the API yet
     
-    // MARK: - Public
+    // MARK: - Public methods
     required init() {
         apiManager = ApiManager()
         NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged),
                                                name: .connected, object: nil)
         NetworkManager.shared.startMonitoring()
     }
-
+    
     func requestImageDetails(_ item: Int) -> ImageDetailsViewModelProtocol? {
         guard let image = images.value[safe: item] else { return nil } //user can select empty cell
         let viewModel: ImageDetailsViewModelProtocol  = ImageDetailsViewModel(image)
@@ -32,21 +32,21 @@ class ImageListViewModel: ImageListViewModelProtocol {
         return viewModel
     }
     
-    func cellViewModel(_ item: Int) -> ImageCellViewModelProtocol {
-        let imageCellVM: ImageCellViewModelProtocol = ImageCellViewModel(images.value[safe: item])
+    func getCellViewModel(_ item: Int) -> ImageCellViewModelProtocol {
+        let imageCellVM: ImageCellViewModelProtocol = ImageCellViewModel(image: images.value[safe: item])
         return imageCellVM
     }
     
     func loadDataIfNeeded(_ item: Int) {
-        fetchImages(item)
+        fetchItems(item)
     }
     
-    // MARK: - Private
+    // MARK: - Private methods
     
-    private func fetchImages(_ item: Int) {
+    private func fetchItems(_ item: Int) {
         //No parallel fetching or fetching same images
         
-        if images.value[safe: item] != nil || apiManager.getStatus() == .inProgress {
+        if images.value[safe: item] != nil || apiManager.fetchStatus == .inProgress {
             return
         }
         self.status.value = .isRefreshing
@@ -73,17 +73,17 @@ class ImageListViewModel: ImageListViewModelProtocol {
             self.endRefresh(TaskStatus.errorParsing)
             return
         }
-
+        
         //Check if all images fetched
         endRefresh(.finished)
         images.value.append(contentsOf: newImages)
         itemsToDisplay = (newImages.count == 0) ? images.value.count : images.value.count + 1
-        apiManager.currentPage.imageIndex = images.value.count - 1
+        apiManager.updateCurrentPage(itemIndex: images.value.count - 1)
     }
     
     @objc private func networkStatusChanged() {
-        if let imageIndex = apiManager.currentPage.imageIndex {
-            fetchImages(imageIndex)
+        if let imageIndex = apiManager.getCurrentItem() {
+            fetchItems(imageIndex)
         }
     }
 }

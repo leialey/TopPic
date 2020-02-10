@@ -16,12 +16,14 @@ public final class NetworkManager {
     
     public static let shared = NetworkManager()
     private var monitor: NWPathMonitor?
+    //No need to use concurrent queue in this particular case but we might perform some parallel operations  in the future
     private let concurrentQueue = DispatchQueue(label: "networkQueue", attributes: .concurrent)
     
     private init() {
     }
 
     func startMonitoring() {
+        //To avoid racing conditions - we are changing property of a singleton
         concurrentQueue.async(flags: .barrier) {
             guard self.monitor == nil else { return }
             self.monitor = NWPathMonitor()
@@ -36,6 +38,7 @@ public final class NetworkManager {
     }
     
     func stopMonitoring() {
+        //To avoid racing conditions - we are changing property of a singleton
         concurrentQueue.async(flags: .barrier) {
             guard self.monitor != nil else { return }
             self.monitor!.cancel()

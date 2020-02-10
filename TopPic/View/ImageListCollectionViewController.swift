@@ -10,9 +10,9 @@ import UIKit
 import Bond
 
 class ImageListCollectionViewController: UICollectionViewController, StatusBindable, ImageListViewModelBindable {    
-    var viewModel: ImageListViewModelProtocol = ImageListViewModel()
+    private let viewModel: ImageListViewModelProtocol = ImageListViewModel()
     private let cellID = "ImageCell"
-    lazy var currentIndex = IndexPath(item: 0, section: 0)
+    private lazy var currentIndex = IndexPath(item: 0, section: 0)
     let itemsPerRow: CGFloat = 2.0
     let minItemSpacing: CGFloat = 5.0
     let minLineSpacing: CGFloat = 5.0
@@ -24,7 +24,7 @@ class ImageListCollectionViewController: UICollectionViewController, StatusBinda
         bindViewModel()
     }
     
-    func bindViewModel() {
+    private func bindViewModel() {
         viewModel.images.bind(to: self) { me, _ in
             me.collectionView.reloadData()
         }
@@ -48,12 +48,14 @@ class ImageListCollectionViewController: UICollectionViewController, StatusBinda
                                                             for: indexPath) as? ImageCollectionViewCell else {
                                                                 fatalError("Cannot cast to ImageCollectionViewCell")
         }
-        cell.bindViewModel(viewModel.cellViewModel(indexPath.item))
+        cell.configureCell(viewModel.getCellViewModel(indexPath.item))
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if viewModel.images.value[safe: indexPath.row] != nil {
         performSegue(withIdentifier: "goToDetails", sender: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -67,19 +69,30 @@ class ImageListCollectionViewController: UICollectionViewController, StatusBinda
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        collectionView.collectionViewLayout.invalidateLayout()
-        let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
-        //To make sure the point is not between the lines
-        let visiblePoint1 = CGPoint(x: 0, y: visibleRect.midY)
-        let visiblePoint2 = CGPoint(x: 0, y: visibleRect.midY + minLineSpacing)
-        currentIndex = collectionView.indexPathForItem(at: visiblePoint1) ?? collectionView.indexPathForItem(at: visiblePoint2) ?? IndexPath(item: 0, section: 0)
-        
-        coordinator.animate(alongsideTransition: nil, completion: {
-            _ in
-            self.collectionView.scrollToItem(at: self.currentIndex, at: .centeredVertically, animated: false)
-        })
+        //We want to see the same item in the middle of the screen when rotating device
+        let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)        //The middle point can lie between the lines so we need 2 points
+        let points = [
+            CGPoint(x: 0, y: visibleRect.midY),
+            CGPoint(x: 0, y: visibleRect.midY - minLineSpacing)
+        ]
+        currentIndex = getMiddleItem(points)
     }
     
     
+    override func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        let currentItemFrame = collectionView.layoutAttributesForItem(at: currentIndex)?.frame
+        return CGPoint(x: 0, y: ((currentItemFrame?.midY ?? 0.0) - collectionView.frame.midY))
+    }
+    
+    private func getMiddleItem(_ points: [CGPoint]) -> IndexPath {
+        var index = IndexPath(item: 0, section: 0)
+        for point in points {
+            if let currentIndex = collectionView.indexPathForItem(at: point) {
+                index = currentIndex
+                break
+            }
+        }
+        return index
+    }
     
 }

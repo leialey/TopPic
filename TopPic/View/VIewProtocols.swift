@@ -20,9 +20,8 @@ extension StatusBindable {
             switch status {
             case (let status) where status == .isRefreshing:
                 SVProgressHUD.show(withStatus: status.statusDescription)
-            case (let status) where status == .errorAPI ||
-                status == .errorParsing ||
-                status == .notConnectedToInternet :
+            case (let status) where
+                [.errorAPI, .errorParsing, .notConnectedToInternet].contains(status):
                 SVProgressHUD.showError(withStatus: status.statusDescription)
             case .finished:
                 SVProgressHUD.dismiss()
@@ -30,20 +29,16 @@ extension StatusBindable {
                 return
             }
         }
-        
     }
 }
 
 protocol ImageListViewModelBindable {
-    var viewModel: ImageListViewModelProtocol { get set }
-    func bindViewModel()
 }
 
 protocol ImageDetailsViewModelBindable {
     var viewModel: ImageDetailsViewModelProtocol? { get set }
-    func bindViewModel()
 }
 
 protocol ImageCellViewBindable {
-    func bindViewModel(_ viewModel: ImageCellViewModelProtocol)
+    func configureCell(_ viewModel: ImageCellViewModelProtocol)
 }

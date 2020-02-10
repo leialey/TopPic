@@ -11,11 +11,11 @@ import Alamofire
 
 struct ApiRequest: ApiRequestConstructor {
     private var baseURL: String
-    private var clientID: String = AppSettings.shared.string(key: "client-id")
+    private let clientID: String = AppSettings.shared.string(key: "client-id")
     private var params: Parameters?
     private var headers: HTTPHeaders?
-    typealias T = DataRequest
-
+    typealias DataRequestType = DataRequest
+    
     // MARK: - Public methods
     init (_ apiEndpoint: ApiEndpoint, _ parameters: ApiRequestParameters) {
         switch apiEndpoint {
@@ -37,7 +37,7 @@ struct ApiRequest: ApiRequestConstructor {
         baseURL = constructBaseURL(&baseURL, parameters)
     }
     
-    func getDataRequest() -> T {
+    func getDataRequest() -> DataRequestType {
         return Alamofire.request(self.baseURL, method: .get, parameters: self.params, headers: self.headers)
     }
     // MARK: - Private methods

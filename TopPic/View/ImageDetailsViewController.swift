@@ -21,7 +21,7 @@ class ImageDetailsViewController: UIViewController, ImageDetailsViewModelBindabl
         bindViewModel()
     }
     
-    func bindViewModel() {
+    private func bindViewModel() {
         viewModel?.image.bind(to: self) { me, image in
             me.imageView.loadFromURLWithPlaceholder(url: image.imageURL)
             me.imageTitle.text = image.title

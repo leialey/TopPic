@@ -13,20 +13,19 @@ protocol ImageListViewModelProtocol {
     init()
     var images: Observable<[Image]> { get }
     var status: Observable<TaskStatus> { get }
-    var itemsToDisplay: Int { get set }
+    var itemsToDisplay: Int { get }
     func requestImageDetails(_ item: Int) -> ImageDetailsViewModelProtocol?
-    func cellViewModel(_ item: Int) -> ImageCellViewModelProtocol
+    func getCellViewModel(_ item: Int) -> ImageCellViewModelProtocol
     func loadDataIfNeeded(_ item: Int)
 }
 
 protocol ImageDetailsViewModelProtocol {
     init(_ image: Image)
-    var image: Observable<Image> { get set }
-    var status: Observable<TaskStatus> { get set }
+    var image: Observable<Image> { get }
+    var status: Observable<TaskStatus> { get }
     func requestDetails(_ item: Int)
 }
 
 protocol ImageCellViewModelProtocol {
-    init(_ image: Image?)
-    var image: Image? { get set }
+    var image: Image? { get }
 }

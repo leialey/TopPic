@@ -12,7 +12,7 @@ class ImageCollectionViewCell: UICollectionViewCell, ImageCellViewBindable {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageTitle: UILabel!
     
-    func bindViewModel(_ viewModel: ImageCellViewModelProtocol) {
+    func configureCell(_ viewModel: ImageCellViewModelProtocol) {
         let cellElements = [imageView, imageTitle]
         if let image = viewModel.image {
             cellElements.forEach({$0?.isHidden = false})

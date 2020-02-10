@@ -8,10 +8,6 @@
 
 import Foundation
 
-class ImageCellViewModel: ImageCellViewModelProtocol {
-    var image: Image?
-    
-    required init(_ image: Image?) {
-        self.image = image
-    }
+struct ImageCellViewModel: ImageCellViewModelProtocol {
+    private(set) var image: Image?
 }

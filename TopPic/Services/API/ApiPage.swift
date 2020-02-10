@@ -10,5 +10,5 @@ import Foundation
 
 struct ApiPage {
     var pageIndex: Int = 0 //Requested page
-    var imageIndex: Int? //Requested image index
+    var itemIndex: Int? //Requested item index
 }

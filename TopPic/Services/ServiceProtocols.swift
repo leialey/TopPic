@@ -11,9 +11,10 @@ import Foundation
 typealias ApiRequestParameters = [String: String]
 
 protocol ApiRequestConstructor {
-    associatedtype T
+    associatedtype DataRequestType
     init(_ apiEndpoint: ApiEndpoint, _ parameters: ApiRequestParameters)
-    func getDataRequest() -> T
+    //We might decide not to use Alamofire so using a generic type here
+    func getDataRequest() -> DataRequestType
 }
 
 protocol ApiImageConstructor {
@@ -22,8 +23,9 @@ protocol ApiImageConstructor {
 }
 
 protocol ApiManagement {
-    var currentPage: ApiPage { get set }
-    func getStatus() -> FetchStatus
+    func updateCurrentPage(itemIndex: Int)
+    func getCurrentItem() -> Int?
+    var fetchStatus: FetchStatus { get }
     func startFetching(_ index: Int)
     func sendRequest(apiEndpoint: ApiEndpoint, parameters: ApiRequestParameters,
                      completionHandler: @escaping (Swift.Result<Any, TaskStatus>) -> Void)

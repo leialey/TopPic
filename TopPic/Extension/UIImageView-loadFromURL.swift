@@ -9,6 +9,7 @@
 import Foundation
 import AlamofireImage
 
+//A small Facade (or Decorator) to simplify Alamofireimage method call, we also provide the same default image filter to reduce its size (and save memory)
 extension UIImageView {
     
     func loadFromURLWithPlaceholder(url: URL?,

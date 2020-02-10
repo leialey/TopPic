@@ -9,6 +9,7 @@
 import Foundation
 
 //There should be only a single instance of AppSettings - therefore using a singleton
+//No readers-writers problem as we only read data
 public final class AppSettings {
     public static let shared = AppSettings()
     private var settings: [String: Any]

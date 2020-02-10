@@ -10,11 +10,11 @@ import Foundation
 import Bond
 
 class ImageDetailsViewModel: ImageDetailsViewModelProtocol {
-    var image: Observable<Image>
-    var status = Observable<TaskStatus>(.notRunning)
+    private(set) var image: Observable<Image>
+    private(set) var status = Observable<TaskStatus>(.notRunning)
     private let apiManager: ApiManagement
     
-    // MARK: - Public
+    // MARK: - Public methods
     required init(_ image: Image) {
         self.image = Observable(image)
         apiManager = ApiManager()
@@ -40,7 +40,7 @@ class ImageDetailsViewModel: ImageDetailsViewModelProtocol {
         }
     }
     
-    // MARK: - Private
+    // MARK: - Private methods
     private func parseJSON(_ jsonString: Any) -> [String]? {
         guard let comments = JSONParser.parse(apiEndpoint: .details, jsonString: jsonString) as? [String] else {
             self.endRefreshing(TaskStatus.errorParsing)

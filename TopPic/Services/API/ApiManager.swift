@@ -9,23 +9,27 @@
 import Foundation
 
 class ApiManager: ApiManagement {
-    var currentPage = ApiPage() // current requested page from API
-    private var fetchStatus: FetchStatus = .initial
+    private var currentPage = ApiPage() // current requested page from API
+    private(set) var fetchStatus: FetchStatus = .initial
     
     // MARK: - Public methods
-    func getStatus() -> FetchStatus {
-        return fetchStatus
+    func updateCurrentPage(itemIndex: Int) {
+        currentPage.itemIndex = itemIndex
+    }
+    
+    func getCurrentItem() -> Int? {
+        return currentPage.itemIndex
     }
     
     func startFetching(_ index: Int) {
-        if index > (currentPage.imageIndex ?? -1) {  //Requested index is greater than previous - request new page
+        if index > (currentPage.itemIndex ?? -1) {  //Requested index is greater than previous - request new page
             currentPage.pageIndex += 1
         }
-        currentPage.imageIndex = index
+        currentPage.itemIndex = index
         fetchStatus = .inProgress
     }
     
-    func sendRequest(apiEndpoint: ApiEndpoint, parameters: ApiRequestParameters,
+    func sendRequest(apiEndpoint: ApiEndpoint, parameters: ApiRequestParameters = [:],
                      completionHandler: @escaping (Swift.Result<Any, TaskStatus>) -> Void) {
         let apiRequest = constructRequest(apiEndpoint, parameters)
         //Start fetching
